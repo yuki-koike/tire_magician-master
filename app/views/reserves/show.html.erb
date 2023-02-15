@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+</head>
+<body>
+  <!-- header -->
+  <%= render 'sizes/header' %>
+
+  <main>
+  	<div class="container">
+  	  <div class="row">
+        <h3>予約商品</h3>
+        <div class="col-md-5">
+          <%= attachment_image_tag @size.manufacture, :image, :size => "350x250" %>
+        </div>
+        <div class="col-md-7">
+          <% if @size.manufacture.tire_maker_id == '1' %>
+            <h4>BRIDGESTONE</h4>
+          <% elsif @size.manufacture.tire_maker_id == '2' %>
+            <h4>DUNLOP</h4>
+          <% elsif @size.manufacture.tire_maker_id == '3' %>
+            <h4>YOKOHAMA</h4>
+          <% end %>
+          <p>商品名：<%= @size.manufacture.name %></p>
+          <p>サイズ：<%= @size.name.sub(/_/, '/') %></p>
+          <p>価格（4本）：<%= @size.price %>円</p>
+        </div>
+      </div>
+
+        <h3>予約内容</h3>
+         <table>
+          <tbody>
+            <tr>
+              <td>予約日</td>
+              <td><%= @reserve.day.strftime("%Y年%m月%d日") %></td>
+            </tr>
+            <tr>
+              <td>予約時間</td>
+              <td><%= @reserve.time.strftime("%H:%M") %></td>
+            </tr>
+            <tr>
+              <td>メーカー</td>
+              <td><%= @reserve.car_maker %></td>
+            </tr>
+            <tr>
+              <td>車種</td>
+              <td><%= @reserve.car_model %></td>
+            </tr>
+          </tbody>
+        </table>
+
+      <div style="text-align:center;padding: 40px 0;">
+        <%= link_to 'トップへ戻る', root_path, class: 'btn btn-danger', :style=> "text-decoration: none; color: white;"  %>
+      </div>
+    </div>
+  </main>
+
+  <!-- footer -->
+  <%= render 'sizes/footer' %>
+
+</body>
+</html>

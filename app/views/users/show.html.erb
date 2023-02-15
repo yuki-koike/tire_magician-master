@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+  <!-- header -->
+  <%= render 'sizes/header' %>
+
+  <main>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-2"></div>
+      <div class="col-xs-8">
+        <table>
+          <thead>
+            <tr>
+              <h3>ユーザー情報</h3>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>名前</td>
+              <td><%= @user.lastname %> <%= current_user.firstname %></td>
+            </tr>
+            <tr>
+              <td>電話番号</td>
+              <td><%= @user.telephone %></td>
+            </tr>
+            <tr>
+              <td>Eメールアドレス</td>
+              <td><%= @user.email %></td>
+            </tr>
+          </tbody>
+        </table>
+      <div style="text-align:center;padding: 40px 0;">
+        <%= link_to "編集", edit_user_path(current_user.id), class: 'btn btn-danger', :style=> "text-decoration: none; color: white;"  %>
+      </div>
+      </div>
+      <div class="col-xs-2"></div>
+    </div>
+
+　　　　<h3>予約済み商品</h3>
+　　　　<% @reserves.each do |reserve| %>
+      <div class="row">
+        <div class="col-md-5">
+          <%= attachment_image_tag reserve.size.manufacture, :image, :size => "350x250" %>
+        </div>
+        <div class="col-md-7">
+          <% if reserve.size.manufacture.tire_maker_id == '1' %>
+            <h4>BRIDGESTONE</h4>
+          <% elsif reserve.size.manufacture.tire_maker_id == '2' %>
+            <h4>DUNLOP</h4>
+          <% elsif reserve.size.manufacture.tire_maker_id == '3' %>
+            <h4>YOKOHAMA</h4>
+          <% end %>
+          <p>商品名：<%= reserve.size.manufacture.name %></p>
+          <p>サイズ：<%= reserve.size.name.sub(/_/, '/') %></p>
+          <p>価格（4本）：<%= reserve.size.price %>円</p>
+        </div>
+      </div>
+
+         <table>
+          <tbody>
+            <tr>
+              <td>予約日</td>
+              <td><%= reserve.day.strftime("%Y年%m月%d日") %></td>
+            </tr>
+            <tr>
+              <td>予約時間</td>
+              <td><%= reserve.time.strftime("%H:%M") %></td>
+            </tr>
+            <tr>
+              <td>メーカー</td>
+              <td><%= reserve.car_maker %></td>
+            </tr>
+            <tr>
+              <td>車種</td>
+              <td><%= reserve.car_model %></td>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+
+  </div>
+  </main>
+
+  <!-- footer -->
+  <%= render 'sizes/footer' %>
+
+</body>
+</html>
